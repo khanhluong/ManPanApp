@@ -9,4 +9,6 @@ object Constants {
     // expiry
     const val FORMAT_CHAR: String = "/"
     val FORMAT_POS_LIST = listOf(2)
+
+    const val TABLE_CARD_ENTRY = "card_entry_table"
 }

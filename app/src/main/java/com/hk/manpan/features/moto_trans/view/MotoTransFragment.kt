@@ -12,7 +12,9 @@ import com.hk.manpan.utils.Constants.FORMAT_CHAR
 import com.hk.manpan.utils.Constants.FORMAT_POS_LIST
 import com.hk.manpan.utils.Constants.POS_SPACES
 import com.hk.manpan.utils.Constants.SPACE_CHAR
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MotoTransFragment : Fragment(R.layout.fragment_moto_trans){
     private lateinit var motoTransBinding: FragmentMotoTransBinding
 
