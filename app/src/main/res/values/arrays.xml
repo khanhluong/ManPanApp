@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="card_entry_moto_types">
+        <item>SINGLE MOTO</item>
+        <item>RECURRING MOTO</item>
+    </string-array>
+</resources>

@@ -1,4 +1,4 @@
-package com.hk.paymentapp
+package com.hk.manpan
 
 import org.junit.Test
 

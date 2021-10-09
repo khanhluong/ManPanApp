@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">PaymentApp</string>
+    <string name="app_name">ManPan</string>
+    <string name="card_entry_header_label">Card Entry</string>
+    <string name="card_entry_enter_card_label">Enter CARD PAN</string>
+    <string name="card_entry_card_hint">4999 **** **** 1234</string>
+    <string name="card_entry_expiry_date_label">EXPIRY Data</string>
+    <string name="card_entry_expiry_date_hint">mm/yy</string>
+    <string name="card_entry_security_code_label">Security Code</string>
+    <string name="card_entry_select_moto_type_label">Select MOTO type</string>
+    <string name="card_entry_stored_credentials_label">Stored Credentials</string>
+    <string name="card_entry_card_stored_on_file_label">Card Stored on File?</string>
+    <string name="card_entry_yes_label">Yes</string>
+    <string name="card_entry_no_label">No</string>
+    <string name="card_entry_continue_label">Continue</string>
+    <string name="trans_pay">pay</string>
 </resources>

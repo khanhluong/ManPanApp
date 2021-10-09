@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="small_padding">5dp</dimen>
+    <dimen name="normal_padding">10dp</dimen>
+    <dimen name="large_padding">20dp</dimen>
+
+    <dimen name="card_entry_padding">20dp</dimen>
+    <dimen name="card_entry_amount_padding_vertical">20dp</dimen>
+    <dimen name="card_entry_label_padding_vertical">10dp</dimen>
+
+    <!--Text size-->
+    <dimen name="card_entry_amount_text_size">30sp</dimen>
+    <dimen name="card_entry_label_text_size">18sp</dimen>
+    <dimen name="card_entry_input_text_size">22sp</dimen>
+</resources>

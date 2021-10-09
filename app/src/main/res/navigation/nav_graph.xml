@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/transFragment">
+
+    <fragment
+        android:id="@+id/transFragment"
+        android:name="com.hk.manpan.features.trans.TransFragment"
+        android:label="Transactions"
+        tools:layout="@layout/fragment_trans">
+        <action
+            android:id="@+id/action_transFragment_to_motoTransFragment"
+            app:destination="@id/transactionMotoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/transactionMotoFragment"
+        android:name="com.hk.manpan.features.moto_trans.view.MotoTransFragment"
+        android:label="Moto Transaction Type"
+        tools:layout="@layout/fragment_moto_trans" />
+</navigation>

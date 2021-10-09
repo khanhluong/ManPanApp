@@ -9,7 +9,7 @@ android {
     compileSdk 30
 
     defaultConfig {
-        applicationId "com.hk.paymentapp"
+        applicationId "com.hk.manpan"
         minSdk 21
         targetSdk 30
         versionCode 1
@@ -30,6 +30,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 }
 
@@ -76,7 +80,7 @@ dependencies {
     def room_version = "2.3.0"
 
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     // Local Unit Tests
     def test_core_version = "1.4.0"
