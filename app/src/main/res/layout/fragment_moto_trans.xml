@@ -75,6 +75,7 @@
         android:background="@drawable/edittext_background"
         android:elevation="2dp"
         android:hint="@string/card_entry_expiry_date_hint"
+        android:digits="01234/56789"
         android:maxLength="5"
         android:inputType="number"
         android:paddingVertical="@dimen/normal_padding"
