@@ -12,7 +12,7 @@ import com.hk.manpan.utils.Constants
 interface CardEntryDao {
 
     @Query("SELECT * FROM " + Constants.TABLE_CARD_ENTRY)
-    fun getCardEntryList(): LiveData<List<CardEntryEntity>>
+    suspend fun getCardEntryList(): List<CardEntryEntity>
 
     //TODO: Fixme with strategy is replace
     @Insert(onConflict = OnConflictStrategy.REPLACE)

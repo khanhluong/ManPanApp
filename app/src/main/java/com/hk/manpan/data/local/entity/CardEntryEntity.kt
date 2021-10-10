@@ -10,11 +10,15 @@ class CardEntryEntity(
     val cvv: String,
     val expiry: String,
     // 0 for single, 1 for Recurring
-    val motoType: Byte,
+    val motoType: Boolean,
     val isCardStoreOnFile: Boolean,
     val noCVVReason: String,
     val amount: Double
 ){
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
+
+    override fun toString(): String {
+        return "$pan $cvv $expiry $motoType $isCardStoreOnFile $noCVVReason $amount"
+    }
 }
