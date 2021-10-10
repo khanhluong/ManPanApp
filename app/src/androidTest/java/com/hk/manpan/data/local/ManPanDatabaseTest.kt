@@ -9,8 +9,6 @@ import com.hk.manpan.data.local.dao.CardEntryDao
 import com.hk.manpan.data.local.entity.CardEntryEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.*
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -43,6 +41,20 @@ class ManPanDatabaseTest {
         )
         cardEntryDao.insertCardEntry(manPanEntity)
         val getMotoResult = cardEntryDao.getCardEntryList()
+        Truth.assertThat(getMotoResult.size).isEqualTo(1)
+    }
+
+    @Test
+    fun insertMotoTransToDatabase_and_search() = runBlocking {
+        val manPanEntity = CardEntryEntity(
+            "test", "123", "0320",
+            motoType = false, isCardStoreOnFile = true, "", 200.0
+        )
+        cardEntryDao.insertCardEntry(manPanEntity)
+        val getMotoResult = cardEntryDao.getCardEntryList()
+        Truth.assertThat(getMotoResult.size).isEqualTo(1)
+
+        val searchResult = cardEntryDao.getTransactionWithValue(1)
         Truth.assertThat(getMotoResult.size).isEqualTo(1)
     }
 }

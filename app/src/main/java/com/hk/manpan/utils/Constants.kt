@@ -12,3 +12,6 @@ object Constants {
 
     const val TABLE_CARD_ENTRY = "card_entry_table"
 }
+
+data class ManPanEntityStatus(var panStatus: Boolean = true, var expiryStatus: Boolean = true)
+

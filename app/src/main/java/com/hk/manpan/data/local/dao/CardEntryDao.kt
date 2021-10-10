@@ -17,4 +17,8 @@ interface CardEntryDao {
     //TODO: Fixme with strategy is replace
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCardEntry(manPanEntity: CardEntryEntity)
+
+    @Query("SELECT * FROM " + Constants.TABLE_CARD_ENTRY + " where id = :id")
+    suspend fun getTransactionWithValue(id: Int): List<CardEntryEntity>
+
 }

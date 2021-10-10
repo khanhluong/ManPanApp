@@ -1,9 +1,12 @@
 package com.hk.manpan.features.moto_trans.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.common.truth.Truth.assertThat
 import com.hk.manpan.data.local.entity.CardEntryEntity
 import com.hk.manpan.repository.ManPanRepository
+import com.hk.manpan.utils.ManPanEntityStatus
 
 import org.junit.Before
 import org.junit.Rule
@@ -69,13 +72,26 @@ class MotoTransViewModelTest {
 
     @Test
     fun insertCardEntry_with_empty_all(){
-        val cardEntryEntity = generateCardEntryEntity()
-        val result = viewModel.insertCardEntry(cardEntryEntity)
-        assertThat(result.value).isFalse()
+        val cardEntryEntity = generateCardEntryEntityFail()
+        val result: LiveData<ManPanEntityStatus> = viewModel.insertCardEntry(cardEntryEntity)
+        assertThat(result.value?.panStatus).isEqualTo(false)
+        assertThat(result.value?.expiryStatus).isEqualTo(false)
     }
 
-    fun generateCardEntryEntity(): CardEntryEntity {
-        return CardEntryEntity("", "", "", 0, false, "", 0.0)
+    @Test
+    fun insertCardEntry_with_empty_all_ok(){
+        val cardEntryEntity = generateCardEntryEntityOK()
+        val result: LiveData<ManPanEntityStatus> = viewModel.insertCardEntry(cardEntryEntity)
+        assertThat(result.value?.panStatus).isEqualTo(true)
+        assertThat(result.value?.expiryStatus).isEqualTo(true)
+    }
+
+    private fun generateCardEntryEntityOK(): CardEntryEntity {
+        return CardEntryEntity("5456789012345670", "123", "11/22", motoType = false, false, "", 0.0)
+    }
+
+    private fun generateCardEntryEntityFail(): CardEntryEntity {
+        return CardEntryEntity("", "", "", motoType = false, false, "", 0.0)
     }
 
 }

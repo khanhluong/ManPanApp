@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.hk.manpan.data.local.entity.CardEntryEntity
 import com.hk.manpan.repository.ManPanRepository
+import com.hk.manpan.utils.ManPanEntityStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.DateFormat
@@ -32,18 +33,22 @@ class MotoTransViewModel @Inject constructor(private val repository: ManPanRepos
         return cardEntryEntities
     }
 
-    fun insertCardEntry(cardEntryEntity: CardEntryEntity): LiveData<Boolean> {
-        val checkInput: MutableLiveData<Boolean> = MutableLiveData()
-        if (cardEntryPanCheck(cardEntryEntity.pan) && cardEntryCvvCheck(cardEntryEntity.cvv)
-            && cardEntryExpiryCheck(cardEntryEntity.expiry) && cardEntryAmountCheck(cardEntryEntity.amount)
-        ) {
+    fun insertCardEntry(cardEntryEntity: CardEntryEntity): LiveData<ManPanEntityStatus> {
+        val checkInput: MutableLiveData<ManPanEntityStatus> = MutableLiveData()
+        val manPanEntityStatus = ManPanEntityStatus();
+        if (!cardEntryPanCheck(cardEntryEntity.pan)) {
+            manPanEntityStatus.panStatus = false
+        }
+        if (!cardEntryExpiryCheck(cardEntryEntity.expiry)) {
+            manPanEntityStatus.expiryStatus = false
+        }
+        if (checkInput.value?.expiryStatus == true && checkInput.value?.expiryStatus == true) {
             viewModelScope.launch {
                 repository.insertCardEntry(cardEntryEntity)
             }
-            checkInput.postValue(true)
-        } else {
-            checkInput.postValue(false)
+            checkInput.postValue(ManPanEntityStatus())
         }
+        checkInput.postValue(manPanEntityStatus)
         return checkInput
 
     }
@@ -51,16 +56,14 @@ class MotoTransViewModel @Inject constructor(private val repository: ManPanRepos
     private fun cardEntryPanCheck(pan: String): Boolean {
         val removeSpace = pan.replace(" ", "")
         return if (!TextUtils.isEmpty(removeSpace)) {
-            if (removeSpace.length == CARD_LENGTH) {
-                true
-            } else removeSpace.length < CARD_LENGTH
+            removeSpace.length == CARD_LENGTH
         } else {
             false
         }
     }
 
     private fun cardEntryCvvCheck(cvv: String): Boolean {
-        if (cvv.isNotEmpty() && cvv.toInt() > 0 ) {
+        if (cvv.isNotEmpty() && cvv.toInt() > 0) {
             return true
         }
         return false

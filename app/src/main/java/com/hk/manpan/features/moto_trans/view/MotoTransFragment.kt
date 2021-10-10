@@ -59,40 +59,44 @@ class MotoTransFragment : Fragment(R.layout.fragment_moto_trans) {
             )
         )
 
-        motoTransBinding.cardEntrySpinnerMotoType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedItem = parent!!.getItemAtPosition(position).toString()
-                if(selectedItem == "SINGLE MOTO"){
-                    motoTransBinding.cardEntryTvStoredCredentials.visibility = View.GONE
-                    motoTransBinding.cardEntryTvCardStoredOnFile.visibility = View.GONE
-                    motoTransBinding.cardEntrySwitchStoredOnFile.visibility = View.GONE
-                }else {
-                    motoTransBinding.cardEntryTvStoredCredentials.visibility = View.VISIBLE
-                    motoTransBinding.cardEntryTvCardStoredOnFile.visibility = View.VISIBLE
-                    motoTransBinding.cardEntrySwitchStoredOnFile.visibility = View.VISIBLE
+        motoTransBinding.cardEntrySpinnerMotoType.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedItem = parent!!.getItemAtPosition(position).toString()
+                    if (selectedItem == "SINGLE MOTO") {
+                        motoTransBinding.cardEntryTvStoredCredentials.visibility = View.GONE
+                        motoTransBinding.cardEntryTvCardStoredOnFile.visibility = View.GONE
+                        motoTransBinding.cardEntrySwitchStoredOnFile.visibility = View.GONE
+                    } else {
+                        motoTransBinding.cardEntryTvStoredCredentials.visibility = View.VISIBLE
+                        motoTransBinding.cardEntryTvCardStoredOnFile.visibility = View.VISIBLE
+                        motoTransBinding.cardEntrySwitchStoredOnFile.visibility = View.VISIBLE
+                    }
                 }
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                //NOT DOING
-            }
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    //NOT DOING
+                }
 
-        }
+            }
 
         motoTransBinding.cardEntryBtnContinue.setOnClickListener {
             Log.d("Test", "onclick button")
             val pan = motoTransBinding.cardEntryEdEnterCard.text.toString()
             val expiry = motoTransBinding.cardEntryEdExpiryDate.text.toString()
             val cvv = motoTransBinding.cardEntryEdSecurityCode.text.toString()
-            val motoType = motoTransBinding.cardEntrySpinnerMotoType.selectedItem.toString() == "SINGLE MOTO"
+            val motoType =
+                motoTransBinding.cardEntrySpinnerMotoType.selectedItem.toString() == "SINGLE MOTO"
             val isCardStoreOnFile = motoTransBinding.cardEntrySwitchStoredOnFile.isChecked
-            //currently not have value
-            val isNoCVVReason = ""
+            //currently hard code value
+            val isNoCVVReason = if (cvv.isEmpty()) {
+                "No CVV on card"
+            } else ""
             val amount = motoTransBinding.cardEntryTvAmount.text.toString()
             val manPanEntity = CardEntryEntity(
                 pan = pan,
@@ -105,9 +109,14 @@ class MotoTransFragment : Fragment(R.layout.fragment_moto_trans) {
             )
             Log.d(TAG, manPanEntity.toString())
             motoTransViewModel.insertCardEntry(manPanEntity).observe(viewLifecycleOwner, {
-                if (!it) {
-                    Toast.makeText(context, "Input error!!!", Toast.LENGTH_SHORT).show()
-                } else {
+                if (!it.panStatus) {
+                    motoTransBinding.cardEntryEdEnterCard.error = "Input error"
+                }
+                if (!it.expiryStatus) {
+                    motoTransBinding.cardEntryEdExpiryDate.error = "Input error"
+                }
+
+                if (it.panStatus && it.expiryStatus) {
                     Toast.makeText(context, "DONE!!!", Toast.LENGTH_SHORT).show()
                 }
             })
