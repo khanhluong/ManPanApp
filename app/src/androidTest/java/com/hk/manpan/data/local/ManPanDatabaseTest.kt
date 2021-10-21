@@ -55,6 +55,6 @@ class ManPanDatabaseTest {
         Truth.assertThat(getMotoResult.size).isEqualTo(1)
 
         val searchResult = cardEntryDao.getTransactionWithValue(1)
-        Truth.assertThat(getMotoResult.size).isEqualTo(1)
+        Truth.assertThat(searchResult.size).isEqualTo(1)
     }
 }
